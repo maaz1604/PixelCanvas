@@ -1,6 +1,6 @@
-import { createContext, useState } from "react";
+import {  createContext, useState } from "react";
 
-export const AppContext = createContext()
+export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
     const [user, setUser] = useState(null);
@@ -15,6 +15,7 @@ const AppContextProvider = (props) => {
         </AppContext.Provider>
     
     )
-}
+};
+
 
 export default AppContextProvider;
