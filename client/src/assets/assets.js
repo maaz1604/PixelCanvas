@@ -18,6 +18,8 @@ import cross_icon from './cross_icon.svg'
 import star_group from './star_group.png'
 import credit_star from './credit_star.svg'
 import profile_icon from './profile_icon.png'
+import user_icon from './reshot-icon-user-profile-EM8NS2L5GW.svg'
+
 
 export const assets = {
     logo,
@@ -34,7 +36,8 @@ export const assets = {
     cross_icon,
     star_group,
     credit_star,
-    profile_icon
+    profile_icon,
+    user_icon
 }
 
 export const stepsData = [
