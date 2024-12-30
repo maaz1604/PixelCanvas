@@ -2,11 +2,58 @@ import { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext';
 import { motion } from 'motion/react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
+
 
 const Login = () => {
 
   const [state,setState] = useState('Login');
-  const {setshowLogin} = useContext(AppContext);
+  const {setshowLogin,setToken,setUser,backendurl} = useContext(AppContext);
+
+  const [name,setName] = useState('')
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+
+  const onsubmitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      
+      if (state === 'Login') {
+      const {data} =  await axios.post(`http://localhost:4000/api/user/login`, {email,password});
+      if (data.success) {
+        setToken(data.token);
+        setUser(data.user);
+        localStorage.setItem('token',data.token);
+        setshowLogin(false);
+      }
+      else{
+        toast.error(data.message);
+      }
+    } else {
+      const {data} =  await axios.post('http://localhost:4000/api/user/register', {name,email,password});
+      if (data.success) {
+        setToken(data.token);
+        setUser(data.user);
+        localStorage.setItem('token',data.token);
+        setshowLogin(false);
+      }
+      else{
+        toast.error(data.message);
+      }
+    }
+    } catch (error) {
+      if (error.response) {
+        console.error("Error Response:", error.response);
+        toast.error(error.response.data.message || "An error occurred");
+      } else {
+        console.error("Error:", error.message);
+        toast.error("An unexpected error occurred");
+      }
+    }
+  }
 
   useEffect(()=>{
     document.body.style.overflow = 'hidden';
@@ -18,7 +65,7 @@ const Login = () => {
   return (
     <>
     <div className='fixed top-0 left-0 right-0 bottom-0 z-1000 backdrop-blur-sm bg-black/30 flex justify-center items-center'>
-        <motion.form 
+        <motion.form onSubmit={onsubmitHandler} 
         initial={{opacity:0.2,y:50}}
         transition={{duration:0.3}}
         whileInView={{opacity:1,y:0}}
@@ -29,15 +76,15 @@ const Login = () => {
 
            {state !== 'Login' && <div className='border px-4 py-1 flex items-center gap-0 rounded-full mt-4'>
                 <img width={38} src={assets.user_icon} alt="" />
-                <input className='outline-none text-sm ' type="text" placeholder='Full Name' required />
+                <input onChange={e => setName(e.target.value)} value={name} className='outline-none text-sm ' type="text" placeholder='Full Name' required />
             </div>}
             <div className='border px-6 py-3 flex items-center gap-3 rounded-full mt-4'>
                 <img width={20} src={assets.email_icon} alt="" />
-                <input className='outline-none text-sm ' type="email" placeholder='Email id' required />
+                <input onChange={e => setEmail(e.target.value)} value={email} className='outline-none text-sm ' type="email" placeholder='Email id' required />
             </div>
             <div className='border px-6 py-3 flex items-center gap-3 rounded-full mt-4'>
                 <img width={15} src={assets.lock_icon} alt="" />
-                <input className='outline-none text-sm' type="password" placeholder='password' required />
+                <input onChange={e => setPassword(e.target.value)} value={password} className='outline-none text-sm' type="password" placeholder='password' required />
             </div>
 
             <p className='text-sm text-blue-600 my-4 cursor-pointer'>Forgot Password?</p>
