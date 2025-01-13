@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const Login = () => {
 
   const [state,setState] = useState('Login');
-  const {setshowLogin,setToken,setUser,backendurl} = useContext(AppContext);
+  const {setshowLogin,setToken,setUser} = useContext(AppContext);
 
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
@@ -20,7 +20,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      
       if (state === 'Login') {
       const {data} =  await axios.post(`http://localhost:4000/api/user/login`, {email,password});
       if (data.success) {
