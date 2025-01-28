@@ -8,6 +8,10 @@ export default defineConfig({
     // eslint-disable-next-line no-undef
     'process.env': process.env, // Optional for additional env support
   },
+  server: {
+    port:  3000, 
+    host: '0.0.0.0', 
+  },
   plugins:
   [react()]
 })
