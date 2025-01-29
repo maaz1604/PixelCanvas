@@ -15,7 +15,7 @@ const AppContextProvider = (props) => {
     
     const loadCreditsData = async () => {
         try {
-            const {data} = await axios.get('http://localhost:4000' + '/api/user/credits', {
+            const {data} = await axios.get('https://pixelcanvas-backend.onrender.com' + '/api/user/credits', {
                 headers:{token}
             });
             if (data.success) {
@@ -30,7 +30,7 @@ const AppContextProvider = (props) => {
 
     const generateImage = async (prompt) => {
         try {
-          const {data} =  await axios.post( 'http://localhost:4000' + '/api/image/generate-image', {prompt}, {headers:{token} });
+          const {data} =  await axios.post( 'https://pixelcanvas-backend.onrender.com' + '/api/image/generate-image', {prompt}, {headers:{token} });
           if (data.success) {
               loadCreditsData();
               if (data.creditBalance===0) {
