@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors({
     origin: "https://pixelcanvas-frontend.onrender.com", 
     methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization"
+    allowedHeaders: ["Content-Type", "Authorization", "token"]
 }));
 
 app.use('/api/user', userRouter);
